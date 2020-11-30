@@ -42,7 +42,7 @@ public class KeyboardForceAdder : MonoBehaviour {
             float horizontal = Input.GetAxis("Horizontal");
             rb.AddForce(new Vector3(horizontal* walkForce, 0, 0), walkForceMode2D);
             if (playerWantsToJump) {            // Since it is active only once per frame, and FixedUpdate may not run in that frame!
-                rb.velocity = new Vector3(rb.velocity.x * slowDownAtJump, rb.velocity.y, rb.velocity.z);
+                rb.velocity = new Vector3(rb.velocity.x * slowDownAtJump, rb.velocity.y);
                 rb.AddForce(new Vector3(0, jumpImpulse, 0), jumpForceMode2D);
                 playerWantsToJump = false;
             } 

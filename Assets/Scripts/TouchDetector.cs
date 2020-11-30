@@ -17,13 +17,13 @@ public class TouchDetector : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void OnCollisionEnter(Collision collision) {
+    private void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log("Entering collision with " + collision.gameObject.name + " in layer " + collision.gameObject.layer+ ". layerMask.value="+ layerMask.value);
         if ((layerMask.value & (1 << collision.gameObject.layer)) > 0)
             touchingColliders++;
     }
 
-    private void OnCollisionExit(Collision collision) {
+    private void OnCollisionExit2D(Collision2D collision) {
         Debug.Log("Exiting collision with " + collision.gameObject.name + " in layer " + collision.gameObject.layer + ". layerMask.value=" + layerMask.value);
         if ((layerMask.value & (1 << collision.gameObject.layer)) > 0)
             touchingColliders--;
