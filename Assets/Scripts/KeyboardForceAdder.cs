@@ -5,7 +5,7 @@
  *  This component allows the player to add force to its object using the arrow keys.
  *  Works with a 3D RigidBody.
  */
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(TouchDetector))]
 public class KeyboardForceAdder : MonoBehaviour {
     [Tooltip("The horizontal force that the player's feet use for walking, in newtons.")]
@@ -17,15 +17,15 @@ public class KeyboardForceAdder : MonoBehaviour {
     [Range(0,1f)]
     [SerializeField] float slowDownAtJump = 0.5f;
 
-    private Rigidbody rb;
+    private Rigidbody2D rb;
     private TouchDetector td;
     void Start() {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         td = GetComponent<TouchDetector>();
     }
 
-    private ForceMode walkForceMode = ForceMode.Force;
-    private ForceMode jumpForceMode = ForceMode.Impulse;
+    private ForceMode2D walkForceMode2D = ForceMode2D.Force;
+    private ForceMode2D jumpForceMode2D = ForceMode2D.Impulse;
     private bool playerWantsToJump = false;
 
     private void Update() {
@@ -40,10 +40,10 @@ public class KeyboardForceAdder : MonoBehaviour {
     private void FixedUpdate() {
         if (td.IsTouching()) {  // allow to walk and jump 
             float horizontal = Input.GetAxis("Horizontal");
-            rb.AddForce(new Vector3(horizontal* walkForce, 0, 0), walkForceMode);
+            rb.AddForce(new Vector3(horizontal* walkForce, 0, 0), walkForceMode2D);
             if (playerWantsToJump) {            // Since it is active only once per frame, and FixedUpdate may not run in that frame!
                 rb.velocity = new Vector3(rb.velocity.x * slowDownAtJump, rb.velocity.y, rb.velocity.z);
-                rb.AddForce(new Vector3(0, jumpImpulse, 0), jumpForceMode);
+                rb.AddForce(new Vector3(0, jumpImpulse, 0), jumpForceMode2D);
                 playerWantsToJump = false;
             } 
         }
